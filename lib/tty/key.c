@@ -988,7 +988,7 @@ get_modifier (void)
         // Translate Linux modifiers into mc modifiers
         if ((modifiers & SHIFT_PRESSED) != 0)
             result |= KEY_M_SHIFT;
-        if ((modifiers & (ALTL_PRESSED | ALTR_PRESSED)) != 0)
+        if ((modifiers & ALTL_PRESSED) != 0)
             result |= KEY_M_ALT;
         if ((modifiers & CONTROL_PRESSED) != 0)
             result |= KEY_M_CTRL;
