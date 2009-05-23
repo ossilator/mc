@@ -1,0 +1,5 @@
+#! /bin/bash
+
+USE_GIT_SHA1=no \
+exec makeit "$@" --disable-nls --without-ext2undel --disable-git-sha1 --enable-maintainer-mode \
+	--with-screen=slang  # ncurses has broken mouse handling and no modified navigation keys
