@@ -1,0 +1,5 @@
+#! /bin/bash
+
+USE_GIT_SHA1=no \
+exec makeit "$@" --disable-nls --without-ext2undel --disable-vfs-smb --with-configdir=/etc/samba --disable-git-sha1 --enable-maintainer-mode \
+	--with-screen=slang
