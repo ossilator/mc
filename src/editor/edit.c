@@ -1057,8 +1057,13 @@ edit_left_char_move_cmd (WEdit *edit)
     }
 #endif
 
-    if (edit_options.cursor_beyond_eol && edit->over_col > 0)
-        edit->over_col--;
+    if (edit_options.cursor_beyond_eol)
+    {
+        if (edit->over_col > 0)
+            edit->over_col--;
+        else if (edit->buffer.curs1 != edit_buffer_get_bol (&edit->buffer, edit->buffer.curs1))
+            edit_cursor_move (edit, -char_length);
+    }
     else
         edit_cursor_move (edit, -char_length);
 }
