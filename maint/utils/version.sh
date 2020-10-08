@@ -49,11 +49,12 @@ EOF
 
 if [ -z "$1" ]
   then
-      echo "usage: $0 <toplevel-source-dir>"
+      echo "usage: $0 <toplevel-source-dir> [<use-git-sha1>]"
       exit 1
 fi
 
 src_top_dir="$1"
+use_git_sha1="$2"
 
 VERSION_FILE="${src_top_dir}/version.h"
 PREV_MC_VERSION="unknown"
@@ -71,9 +72,18 @@ git_head=`git --git-dir "${src_top_dir}/.git" rev-parse --verify HEAD 2>/dev/nul
 # try to store sha1
 CURR_MC_VERSION="${git_head}"
 
-new_version=`git --git-dir "${src_top_dir}/.git" describe --always 2>/dev/null`
+if [ "x$use_git_sha1" = xno ]
+  then
+    arg=--abbrev=0
+    sfx=-patched
+  else
+    arg=
+    sfx=
+fi
+
+new_version=`git --git-dir "${src_top_dir}/.git" describe --always $arg 2>/dev/null`
 [ -z "${new_version}" ] && mc_print_version
 
 # store pretty tagged version
-CURR_MC_VERSION="${new_version}"
+CURR_MC_VERSION="${new_version}${sfx}"
 mc_print_version

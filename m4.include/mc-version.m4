@@ -8,8 +8,12 @@ dnl @license GPL
 dnl @copyright Free Software Foundation, Inc.
 
 AC_DEFUN([mc_VERSION],[
+    AC_ARG_ENABLE([git-sha1],
+        [AS_HELP_STRING([--disable-git-sha1], [Do not include git SHA1 in version string])],
+        [USE_GIT_SHA1=$enableval],
+        [USE_GIT_SHA1=yes])
     if test ! -f ${srcdir}/version.h; then
-        ${srcdir}/maint/utils/version.sh ${srcdir}
+        ${srcdir}/maint/utils/version.sh ${srcdir} $USE_GIT_SHA1
     fi
     if test -f ${srcdir}/version.h; then
         VERSION=$(grep '^#define MC_CURRENT_VERSION' ${srcdir}/version.h | sed 's/.*"\(.*\)"$/\1/')
@@ -17,6 +21,7 @@ AC_DEFUN([mc_VERSION],[
         VERSION="unknown"
     fi
     AC_SUBST(VERSION)
+    AC_SUBST(USE_GIT_SHA1)
 
     dnl Version and Release without dashes for the distro packages
     DISTR_VERSION=`echo $VERSION | sed 's/^\([[^\-]]*\).*/\1/'`

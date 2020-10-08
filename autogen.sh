@@ -20,7 +20,7 @@ ${XGETTEXT:-xgettext} --keyword=_ --keyword=N_ --keyword=Q_ --output=- \
 cd src/vfs/smbfs/helpers
 date -u >include/stamp-h.in
 
-$srcdir/maint/utils/version.sh "$srcdir"
+$srcdir/maint/utils/version.sh "$srcdir" $USE_GIT_SHA1
 
 if test -x $srcdir/configure.mc; then
   $srcdir/configure.mc "$@"

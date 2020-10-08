@@ -30,7 +30,7 @@ CONFIG_STATUS_DEPENDENCIES = $(top_srcdir)/version.h
 
 update-version:
 	@if test -x $(top_srcdir)/maint/utils/version.sh; then \
-	    $(top_srcdir)/maint/utils/version.sh "$(top_srcdir)" 2>&1 >/dev/null; \
+	    $(top_srcdir)/maint/utils/version.sh "$(top_srcdir)" $(USE_GIT_SHA1) 2>&1 >/dev/null; \
 	else \
 	    if test ! -e $(top_srcdir)/version.h; then \
 	        echo "File not found: $(top_srcdir)/maint/utils/version.sh"; \
