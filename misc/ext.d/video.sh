@@ -38,9 +38,12 @@ do_open_action() {
     fi
 
     case "${filetype}" in
+    #ram) run-mailcap audio/x-pn-realaudio:"${MC_EXT_FILENAME}";;
     *)
         if [ -n "$DISPLAY" ]; then
-            ($PLAYER "${MC_EXT_FILENAME}" >/dev/null 2>&1 &)
+            (vlc "${MC_EXT_FILENAME}" >/dev/null 2>&1 &)
+            #($PLAYER "${MC_EXT_FILENAME}" >/dev/null 2>&1 &)
+            #(mplayer2 -vf pp=vb:hb:dr -fs -keepaspect "${MC_EXT_FILENAME}" >/dev/null 2>&1 &)
         else
             $PLAYER -vo null "${MC_EXT_FILENAME}"
         fi

@@ -28,6 +28,7 @@ do_open_action() {
 
     case "${filetype}" in
     html)
+        #run-mailcap text/html:"${MC_EXT_FILENAME}"
         (if [ -n "@X11_WWW@" -a  -n "$DISPLAY" ]; then
             (@X11_WWW@ file://"${MC_EXT_CURRENTDIR}"/"${MC_EXT_BASENAME}" &) 1>&2
         else
