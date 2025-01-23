@@ -28,8 +28,9 @@ do_open_action() {
 
     case "${filetype}" in
     html)
+        #run-mailcap text/html:"${MC_EXT_FILENAME}"
         (if [ -n "$DISPLAY" ]; then
-            for browser in gnome-moz-remote mozilla firefox chromium google-chrome konqueror brave-browser opera open ; do
+            for browser in brave-browser gnome-moz-remote mozilla firefox chromium google-chrome konqueror opera open ; do
                 if command -v "${browser}" 1>&2 ; then
                     "${browser}" file://"${MC_EXT_CURRENTDIR}"/"${MC_EXT_BASENAME}" 1>&2 &
                     break

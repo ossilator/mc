@@ -51,6 +51,7 @@ do_open_action() {
         ;;
     mod)
         mikmod "${MC_EXT_FILENAME}"
+        #run-mailcap application/x-mod:"${MC_EXT_FILENAME}"
         #tracker "${MC_EXT_FILENAME}"
         ;;
     wav22)
@@ -79,6 +80,7 @@ do_open_action() {
         ;;
     midi)
         timidity "${MC_EXT_FILENAME}"
+        #run-mailcap audio/midi:"${MC_EXT_FILENAME}"
         ;;
     wma)
         mplayer -vo null "${MC_EXT_FILENAME}"

@@ -37,7 +37,8 @@ do_open_action() {
     fi
 
     if [ -n "$DISPLAY" ]; then
-        ($PLAYER "${MC_EXT_FILENAME}" >/dev/null 2>&1 &)
+        (vlc "${MC_EXT_FILENAME}" >/dev/null 2>&1 &)
+        #($PLAYER "${MC_EXT_FILENAME}" >/dev/null 2>&1 &)
     else
         $PLAYER -vo null "${MC_EXT_FILENAME}"
     fi

@@ -80,9 +80,10 @@ do_view_action() {
         fi
         ;;
     dvi)
-        command -v dvi2tty >/dev/null 2>&1 && \
-            dvi2tty "${MC_EXT_FILENAME}" || \
-            catdvi "${MC_EXT_FILENAME}"
+        run-mailcap application/x-dvi:"${MC_EXT_FILENAME}"
+        #command -v dvi2tty >/dev/null 2>&1 && \
+        #    dvi2tty "${MC_EXT_FILENAME}" || \
+        #    catdvi "${MC_EXT_FILENAME}"
         ;;
     djvu)
         djvused -e print-pure-txt "${MC_EXT_FILENAME}"
@@ -100,6 +101,7 @@ do_open_action() {
 
     case "${filetype}" in
     ps)
+        #run-mailcap application/postscript:"${MC_EXT_FILENAME}"
         if [ -n "$DISPLAY" ]; then
             (gv "${MC_EXT_FILENAME}" &)
         else
@@ -107,12 +109,14 @@ do_open_action() {
         fi
         ;;
     pdf)
+        #run-mailcap application/pdf:"${MC_EXT_FILENAME}"
         if [ ! -n "$DISPLAY" ]; then
             pdftotext -layout -nopgbrk "${MC_EXT_FILENAME}" - | ${PAGER:-more}
-        elif see > /dev/null 2>&1; then
-            (see "${MC_EXT_FILENAME}" &)
+#        elif see > /dev/null 2>&1; then
+#            (see "${MC_EXT_FILENAME}" &)
         else
-            (xpdf "${MC_EXT_FILENAME}" &)
+            (okular "${MC_EXT_FILENAME}" &)
+            #(xpdf "${MC_EXT_FILENAME}" &)
         fi
         #(acroread "${MC_EXT_FILENAME}" &)
         #(ghostview "${MC_EXT_FILENAME}" &)
@@ -137,7 +141,9 @@ do_open_action() {
     gnumeric)
         (gnumeric "${MC_EXT_FILENAME}" &)
         ;;
+    #rtf) run-mailcap text/rtf:"${MC_EXT_FILENAME}"
     msdoc)
+        #run-mailcap application/msword:"${MC_EXT_FILENAME}"
         if [ -n "$DISPLAY" ]; then
             OOFFICE=`get_ooffice_executable`
             if [ -n "${OOFFICE}" ]; then
@@ -153,6 +159,7 @@ do_open_action() {
         fi
         ;;
     msxls)
+        #run-mailcap application/vnd.ms-excel:"${MC_EXT_FILENAME}"
         if [ -n "$DISPLAY" ]; then
             OOFFICE=`get_ooffice_executable`
             if [ -n "${OOFFICE}" ]; then

@@ -592,8 +592,11 @@ Open=@EXTHELPERSDIR@/image.sh open avif
 [sound]
 Regex=\\.(wav|snd|voc|au|smp|aiff|snd|m4a|ape|aac|wv|spx|flac)$
 RegexIgnoreCase=true
-Open=@EXTHELPERSDIR@/sound.sh open common
-View=%view{ascii} @EXTHELPERSDIR@/sound.sh view common
+#Open=@EXTHELPERSDIR@/sound.sh open common
+#View=%view{ascii} @EXTHELPERSDIR@/sound.sh view common
+Open=if [ "$DISPLAY" = "" ]; then play %f; else (audacious -e %f >/dev/null 2>&1 &); fi
+Edit=if [ "$DISPLAY" = "" ]; then play %f; else (audacious -e %f >/dev/null 2>&1 &); fi
+View=if [ "$DISPLAY" = "" ]; then play %f; else (audacious %f >/dev/null 2>&1 &); fi
 
 [mod]
 Regex=\\.(mod|s3m|xm|it|mtm|669|stm|ult|far)$
@@ -608,20 +611,29 @@ Open=@EXTHELPERSDIR@/sound.sh open wav22
 [mp3]
 Shell=.mp3
 ShellIgnoreCase=true
-Open=@EXTHELPERSDIR@/sound.sh open mp3
-View=%view{ascii} @EXTHELPERSDIR@/sound.sh view mp3
+#Open=@EXTHELPERSDIR@/sound.sh open mp3
+#View=%view{ascii} @EXTHELPERSDIR@/sound.sh view mp3
+Open=if [ "$DISPLAY" = "" ]; then play %f; else (audacious -e %f >/dev/null 2>&1 &); fi
+Edit=if [ "$DISPLAY" = "" ]; then play %f; else (audacious -e %f >/dev/null 2>&1 &); fi
+View=if [ "$DISPLAY" = "" ]; then play %f; else (audacious %f >/dev/null 2>&1 &); fi
 
 [ogg]
 Regex=\\.og[gax]$
 RegexIgnoreCase=true
-Open=@EXTHELPERSDIR@/sound.sh open ogg
-View=%view{ascii} @EXTHELPERSDIR@/sound.sh view ogg
+#Open=@EXTHELPERSDIR@/sound.sh open ogg
+#View=%view{ascii} @EXTHELPERSDIR@/sound.sh view ogg
+Open=if [ "$DISPLAY" = "" ]; then play %f; else (audacious -e %f >/dev/null 2>&1 &); fi
+Edit=if [ "$DISPLAY" = "" ]; then play %f; else (audacious -e %f >/dev/null 2>&1 &); fi
+View=if [ "$DISPLAY" = "" ]; then play %f; else (audacious %f >/dev/null 2>&1 &); fi
 
 [opus]
 Shell=.opus
 ShellIgnoreCase=true
-Open=@EXTHELPERSDIR@/sound.sh open opus
-View=%view{ascii} @EXTHELPERSDIR@/sound.sh view opus
+#Open=@EXTHELPERSDIR@/sound.sh open opus
+#View=%view{ascii} @EXTHELPERSDIR@/sound.sh view opus
+Open=if [ "$DISPLAY" = "" ]; then play %f; else (audacious -e %f >/dev/null 2>&1 &); fi
+Edit=if [ "$DISPLAY" = "" ]; then play %f; else (audacious -e %f >/dev/null 2>&1 &); fi
+View=if [ "$DISPLAY" = "" ]; then play %f; else (audacious %f >/dev/null 2>&1 &); fi
 
 [midi]
 Regex=\\.(midi?|rmid?)$
@@ -631,8 +643,11 @@ Open=@EXTHELPERSDIR@/sound.sh open midi
 [wma]
 Shell=.wma
 ShellIgnoreCase=true
-Open=@EXTHELPERSDIR@/sound.sh open wma
-View=%view{ascii} @EXTHELPERSDIR@/sound.sh view wma
+#Open=@EXTHELPERSDIR@/sound.sh open wma
+#View=%view{ascii} @EXTHELPERSDIR@/sound.sh view wma
+Open=if [ "$DISPLAY" = "" ]; then play %f; else (audacious -e %f >/dev/null 2>&1 &); fi
+Edit=if [ "$DISPLAY" = "" ]; then play %f; else (audacious -e %f >/dev/null 2>&1 &); fi
+View=if [ "$DISPLAY" = "" ]; then play %f; else (audacious %f >/dev/null 2>&1 &); fi
 
 # Play list
 [playlist]
@@ -1152,6 +1167,13 @@ View=%view{ascii} @EXTHELPERSDIR@/archive.sh view pak
 [par2]
 Type=^Parity Archive Volume Set
 Open=@EXTHELPERSDIR@/archive.sh open par2
+
+
+# ossi's shit
+[encrypted-text]
+Shell=.txt.gpg
+ShellIgnoreCase=true
+Edit=gpgedit %f
 
 
 ######### Includes #########

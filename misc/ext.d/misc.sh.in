@@ -23,7 +23,7 @@ do_view_action() {
         cat "${MC_EXT_FILENAME}" 2>/dev/null
         ;;
     ar)
-        file "${MC_EXT_FILENAME}" && nm -C "${MC_EXT_FILENAME}"
+        file "${MC_EXT_FILENAME}" && ar tv "${MC_EXT_FILENAME}" && nm -C "${MC_EXT_FILENAME}"
         ;;
     lib)
         gplib -t "${MC_EXT_FILENAME}" | \
