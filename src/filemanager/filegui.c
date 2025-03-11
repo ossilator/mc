@@ -633,7 +633,7 @@ overwrite_query_dialog (file_op_context_t *ctx, enum OperationMode mode)
         label_set_text (l, str_trunc (l->text, w));
     }
 
-    // real dlalog width
+    // real dialog width
     dlg_width += 2 * (2 + gap);
 
     WX (1) = WX (0) + WCOLS (0) + gap;
@@ -741,14 +741,14 @@ is_wildcarded (const char *p)
 /* --------------------------------------------------------------------------------------------- */
 
 static void
-place_progress_buttons (WDialog *h, gboolean suspended)
+place_progress_buttons (WDialog *h, const gboolean suspended)
 {
-    const size_t i = suspended ? 2 : 1;
-    Widget *w = WIDGET (h);
-    int buttons_width;
+    const Widget *w = WIDGET (h);
 
-    buttons_width = 2 + progress_buttons[0].len + progress_buttons[3].len;
-    buttons_width += progress_buttons[i].len;
+    const size_t i = suspended ? 2 : 1;
+    const int buttons_width =
+        2 + progress_buttons[0].len + progress_buttons[3].len + progress_buttons[i].len;
+
     button_set_text (BUTTON (progress_buttons[i].w), progress_buttons[i].text);
 
     progress_buttons[0].w->rect.x = w->rect.x + (w->rect.cols - buttons_width) / 2;
@@ -759,11 +759,8 @@ place_progress_buttons (WDialog *h, gboolean suspended)
 /* --------------------------------------------------------------------------------------------- */
 
 static int
-progress_button_callback (WButton *button, int action)
+progress_button_callback (MC_UNUSED WButton *button, MC_UNUSED int action)
 {
-    (void) button;
-    (void) action;
-
     // don't close dialog in any case
     return 0;
 }
@@ -781,7 +778,7 @@ progress_button_callback (WButton *button, int action)
  */
 
 file_op_context_t *
-file_op_context_new (FileOperation op)
+file_op_context_new (const FileOperation op)
 {
     file_op_context_t *ctx;
 
@@ -825,12 +822,11 @@ file_progress_check_buttons (file_op_context_t *ctx)
 {
     int c;
     Gpm_Event event;
-    file_progress_ui_t *ui;
 
     if (ctx == NULL || ctx->ui == NULL)
         return FILE_CONT;
 
-    ui = ctx->ui;
+    const file_progress_ui_t *ui = ctx->ui;
 
 get_event:
     event.x = -1;  // Don't show the GPM cursor
@@ -1025,7 +1021,7 @@ file_progress_ui_destroy (file_op_context_t *ctx)
 {
     if (ctx != NULL && ctx->ui != NULL)
     {
-        file_progress_ui_t *ui = (file_progress_ui_t *) ctx->ui;
+        const file_progress_ui_t *ui = ctx->ui;
 
         dlg_run_done (ui->op_dlg);
         widget_destroy (WIDGET (ui->op_dlg));
@@ -1042,12 +1038,10 @@ void
 file_progress_show (file_op_context_t *ctx, off_t done, off_t total, const char *stalled_msg,
                     gboolean force_update)
 {
-    file_progress_ui_t *ui;
-
     if (ctx == NULL || ctx->ui == NULL)
         return;
 
-    ui = ctx->ui;
+    const file_progress_ui_t *ui = ctx->ui;
 
     if (total == 0)
     {
@@ -1085,12 +1079,10 @@ file_progress_show (file_op_context_t *ctx, off_t done, off_t total, const char 
 void
 file_progress_show_count (file_op_context_t *ctx)
 {
-    file_progress_ui_t *ui;
-
     if (ctx == NULL || ctx->ui == NULL)
         return;
 
-    ui = ctx->ui;
+    const file_progress_ui_t *ui = ctx->ui;
 
     if (ui->total_files_processed_label == NULL)
         return;
@@ -1111,12 +1103,11 @@ file_progress_show_total (file_op_context_t *ctx, uintmax_t copied_bytes, gint64
 {
     char buffer2[BUF_TINY];
     char buffer3[BUF_TINY];
-    file_progress_ui_t *ui;
 
     if (ctx == NULL || ctx->ui == NULL)
         return;
 
-    ui = ctx->ui;
+    const file_progress_ui_t *ui = ctx->ui;
 
     if (ui->progress_total_gauge != NULL)
     {
@@ -1184,12 +1175,10 @@ file_progress_show_total (file_op_context_t *ctx, uintmax_t copied_bytes, gint64
 void
 file_progress_show_source (file_op_context_t *ctx, const vfs_path_t *vpath)
 {
-    file_progress_ui_t *ui;
-
     if (ctx == NULL || ctx->ui == NULL)
         return;
 
-    ui = ctx->ui;
+    const file_progress_ui_t *ui = ctx->ui;
 
     if (vpath != NULL)
     {
@@ -1208,12 +1197,10 @@ file_progress_show_source (file_op_context_t *ctx, const vfs_path_t *vpath)
 void
 file_progress_show_target (file_op_context_t *ctx, const vfs_path_t *vpath)
 {
-    file_progress_ui_t *ui;
-
     if (ctx == NULL || ctx->ui == NULL)
         return;
 
-    ui = ctx->ui;
+    const file_progress_ui_t *ui = ctx->ui;
 
     if (vpath != NULL)
     {
@@ -1233,15 +1220,12 @@ gboolean
 file_progress_show_deleting (file_op_context_t *ctx, const vfs_path_t *vpath, size_t *count)
 {
     static gint64 timestamp = 0;
-    // update with 25 FPS rate
-    static const gint64 delay = G_USEC_PER_SEC / 25;
-
-    gboolean ret;
+    const gint64 delay = G_USEC_PER_SEC / 25;  // update with 25 FPS rate
 
     if (ctx == NULL || ctx->ui == NULL)
         return FALSE;
 
-    ret = mc_time_elapsed (&timestamp, delay);
+    const gboolean ret = mc_time_elapsed (&timestamp, delay);
 
     if (ret)
     {
