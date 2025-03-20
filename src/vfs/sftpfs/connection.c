@@ -273,6 +273,13 @@ sftpfs_read_known_hosts (struct vfs_s_super *super, GError **mcerror)
 
     sftpfs_super->known_hosts_file =
         mc_build_filename (mc_config_get_home_dir (), ".ssh", "known_hosts", (char *) NULL);
+
+    if (!exist_file (sftpfs_super->known_hosts_file))
+    {
+        mc_propagate_error (mcerror, 0, "%s", _ ("sftp: cannot open ~/.ssh/known_hosts"));
+        return FALSE;
+    }
+
     rc = libssh2_knownhost_readfile (sftpfs_super->known_hosts, sftpfs_super->known_hosts_file,
                                      LIBSSH2_KNOWNHOST_FILE_OPENSSH);
     if (rc > 0)
