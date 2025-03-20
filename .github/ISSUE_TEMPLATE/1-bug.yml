@@ -41,6 +41,14 @@ body:
     validations:
       required: true
 
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: How to reproduce
+      description: Give minimal, yet complete instructions how to reproduce the issue.
+    validations:
+      required: true
+
   - type: checkboxes
     id: reproducible-latest
     attributes:
