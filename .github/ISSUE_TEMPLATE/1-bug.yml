@@ -21,7 +21,7 @@ body:
         - label: I have searched the existing issues
           required: true
 
-  - type: textarea
+  - type: input
     id: mc-version
     attributes:
       label: Midnight Commander version
@@ -31,7 +31,7 @@ body:
     validations:
       required: true
 
-  - type: textarea
+  - type: input
     id: mc-os
     attributes:
       label: Operating system
